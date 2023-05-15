@@ -1,4 +1,3 @@
-# .goreleaser.yml
 builds:
 - main: cmd/skbn.go
   binary: skbn
@@ -12,17 +11,9 @@ builds:
   - CGO_ENABLED=0
   ldflags:
   - -s -w -X main.GitTag={{.Tag}} -X main.GitCommit={{.ShortCommit}}
-archive:
-  name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}"
-  format: tar.gz
-  wrap_in_directory: true
-  format_overrides:
-  - goos: windows
-    format: zip
-  replacements:
-    darwin: macos
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}"
 dockers:
-- binary: skbn
-  dockerfile: Dockerfile
-  image_templates:
-  - "maorfr/{{.ProjectName}}:{{ .Tag }}"
+- image_templates:
+  - "amerello/{{.ProjectName}}:{{ .Tag }}"
